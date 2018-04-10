@@ -1,0 +1,27 @@
+hostname {{host_name}}
+!
+enable password {{enable_password}}
+!
+username {{username}} password 0 {{password}}
+ip domain-name {{domain_name}}
+!
+ip ssh version 2
+!
+{% for vlan , vlan_info  in vlans.items() %}
+{{vlan}}
+ name {{vlan_info['name']}}
+{% endfor %}
+!
+{% for interface , interface_info in interfaces.items() %}
+!
+interface {{interface}}
+ ip address {{interface_info['address']}} {{interface_info['mask']}}
+!
+{% endfor %}
+ip route 0.0.0.0 0.0.0.0 {{default_route}}
+!
+line vty 0 4
+ exec-timeout 0 0
+ login local
+ transport input all
+!

@@ -1,0 +1,33 @@
+---
+cisco_sw1:
+ host_name : switch1
+ enable_password : cisco
+ username : cisco
+ password : cisco
+ domain_name : cisco
+ vlans :
+   vlan 10 :
+     name : marketing
+   vlan 50 :
+     name : HR
+ interfaces :
+   loopback 0 :
+     address : 1.1.1.1
+     mask : 255.255.255.255
+
+cisco_sw2:
+ host_name : switch2
+ enable_password : cisco
+ username : cisco
+ password : cisco
+ domain_name : cisco
+ vlans :
+   vlan 10 :
+     name : marketing
+   vlan 50 :
+     name : HR
+ interfaces :
+   loopback 0 :
+     address : 2.2.2.2
+     mask : 255.255.255.255
+
