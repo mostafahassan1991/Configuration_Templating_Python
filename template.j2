@@ -1,27 +1,36 @@
-hostname {{host_name}}
+hostname {{hostname}}
+{%if interfaces%}
+{%for intf , int_config in interfaces.items()%}
+interface {{intf}}
+  ipv4 address {{int_config['ipaddr']}}/{{int_config['sm']}}
+  no shutdown
 !
-enable password {{enable_password}}
-!
-username {{username}} password 0 {{password}}
-ip domain-name {{domain_name}}
-!
-ip ssh version 2
-!
-{% for vlan , vlan_info  in vlans.items() %}
-{{vlan}}
- name {{vlan_info['name']}}
-{% endfor %}
-!
-{% for interface , interface_info in interfaces.items() %}
-!
-interface {{interface}}
- ip address {{interface_info['address']}} {{interface_info['mask']}}
-!
-{% endfor %}
-ip route 0.0.0.0 0.0.0.0 {{default_route}}
-!
-line vty 0 4
- exec-timeout 0 0
- login local
- transport input all
-!
+{%endfor%}
+{%endif%}
+
+{%if ospf %}
+router ospf 1
+  router-id {{ospf['ospf_id']}}
+  area {{ospf['area']}}
+{%for ospf_intf in ospf['interfaces']%}
+    interface {{ospf_intf}}
+    !
+{%endfor%}
+
+{%endif%}
+
+{%if bgp %}
+router bgp {{bgp['local_as']}}
+  bgp router-id {{bgp['bgp_id']}}
+  address-family ipv4 unicast
+  !
+{%for neighbor , neighbor_info in bgp['neighbors'].items()%}
+  neighbor {{neighbor_info['neighbor_address']}}
+   remote-as {{neighbor_info['neighbor_as']}}
+   update-source Loopback0
+   address-family ipv4 unicast
+   !
+  !
+  !  
+{%endfor%}
+{%endif%}
