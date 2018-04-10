@@ -1,33 +1,103 @@
----
-cisco_sw1:
- host_name : switch1
- enable_password : cisco
- username : cisco
- password : cisco
- domain_name : cisco
- vlans :
-   vlan 10 :
-     name : marketing
-   vlan 50 :
-     name : HR
- interfaces :
-   loopback 0 :
-     address : 1.1.1.1
-     mask : 255.255.255.255
+XR1-0:
+  hostname: XR1-0
+  interfaces:
+    loopback0:
+      ipaddr: 100.100.100.100
+      sm: 32
+    GigabitEthernet0/0/0/0:
+      ipaddr: 70.70.111.1
+      sm: 24
+    GigabitEthernet0/0/0/1:
+      ipaddr: 70.70.112.1
+      sm: 24
+    GigabitEthernet0/0/0/2:
+      ipaddr: 70.70.113.1
+      sm: 24
+    GigabitEthernet0/0/0/3:
+      ipaddr: 70.70.114.1
+      sm: 24
+    GigabitEthernet0/0/0/4:
+      ipaddr: 70.70.115.1
+      sm: 24
+    GigabitEthernet0/0/0/5:
+      ipaddr: 70.70.100.1
+      sm: 24
+    GigabitEthernet0/0/0/6:
+      ipaddr: 70.70.123.1
+      sm: 24
 
-cisco_sw2:
- host_name : switch2
- enable_password : cisco
- username : cisco
- password : cisco
- domain_name : cisco
- vlans :
-   vlan 10 :
-     name : marketing
-   vlan 50 :
-     name : HR
- interfaces :
-   loopback 0 :
-     address : 2.2.2.2
-     mask : 255.255.255.255
 
+  
+  ospf:
+    ospf_id: 100.100.100.100
+    area : 0
+    interfaces:
+      - loopback0
+      - GigabitEthernet0/0/0/0
+      - GigabitEthernet0/0/0/1
+      - GigabitEthernet0/0/0/2
+      - GigabitEthernet0/0/0/3
+      - GigabitEthernet0/0/0/4
+      - GigabitEthernet0/0/0/5
+      - GigabitEthernet0/0/0/6
+  bgp:
+    bgp_id: 100.100.100.100
+    local_as: 1
+    neighbors:
+      ABR-1:
+        neighbor_address: 11.11.11.11
+        neighbor_as: 1
+      ABR-2:
+        neighbor_address: 12.12.12.12
+        neighbor_as: 1
+
+
+
+          
+XR2-0:
+  hostname: XR2-0
+  interfaces:
+    loopback0:
+      ipaddr: 200.200.200.200
+      sm: 32
+    GigabitEthernet0/0/0/0:
+      ipaddr: 80.80.111.1
+      sm: 24
+    GigabitEthernet0/0/0/1:
+      ipaddr: 80.80.112.1
+      sm: 24
+    GigabitEthernet0/0/0/2:
+      ipaddr: 80.80.113.1
+      sm: 24
+    GigabitEthernet0/0/0/3:
+      ipaddr: 80.80.114.1
+      sm: 24
+    GigabitEthernet0/0/0/4:
+      ipaddr: 80.80.115.1
+      sm: 24
+    GigabitEthernet0/0/0/5:
+      ipaddr: 80.80.100.1
+      sm: 24
+
+  ospf:
+    ospf_id: 100.100.100.100
+    area : 0
+    interfaces:
+      - loopback0
+      - GigabitEthernet0/0/0/0
+      - GigabitEthernet0/0/0/1
+      - GigabitEthernet0/0/0/2
+      - GigabitEthernet0/0/0/3
+      - GigabitEthernet0/0/0/4
+      - GigabitEthernet0/0/0/5
+  bgp:
+    bgp_id: 200.200.200.200
+    local_as: 1
+    neighbors:
+      ABR-1:
+        neighbor_address: 11.11.11.11
+        neighbor_as: 1
+      ABR-2:
+        neighbor_address: 12.12.12.12
+        neighbor_as: 1
+              
