@@ -1,0 +1,68 @@
+hostname XR2-0
+
+interface loopback0
+  ipv4 address 200.200.200.200/32
+  no shutdown
+!
+interface GigabitEthernet0/0/0/5
+  ipv4 address 80.80.100.1/24
+  no shutdown
+!
+interface GigabitEthernet0/0/0/4
+  ipv4 address 80.80.115.1/24
+  no shutdown
+!
+interface GigabitEthernet0/0/0/3
+  ipv4 address 80.80.114.1/24
+  no shutdown
+!
+interface GigabitEthernet0/0/0/2
+  ipv4 address 80.80.113.1/24
+  no shutdown
+!
+interface GigabitEthernet0/0/0/1
+  ipv4 address 80.80.112.1/24
+  no shutdown
+!
+interface GigabitEthernet0/0/0/0
+  ipv4 address 80.80.111.1/24
+  no shutdown
+!
+
+router ospf 1
+  router-id 100.100.100.100
+  area 0
+    interface loopback0
+    !
+    interface GigabitEthernet0/0/0/0
+    !
+    interface GigabitEthernet0/0/0/1
+    !
+    interface GigabitEthernet0/0/0/2
+    !
+    interface GigabitEthernet0/0/0/3
+    !
+    interface GigabitEthernet0/0/0/4
+    !
+    interface GigabitEthernet0/0/0/5
+    !
+
+
+router bgp 1
+  bgp router-id 200.200.200.200
+  address-family ipv4 unicast
+  !
+  neighbor 12.12.12.12
+   remote-as 1
+   update-source Loopback0
+   address-family ipv4 unicast
+   !
+  !
+  !
+  neighbor 11.11.11.11
+   remote-as 1
+   update-source Loopback0
+   address-family ipv4 unicast
+   !
+  !
+  !
